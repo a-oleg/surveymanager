@@ -1,0 +1,596 @@
+openapi: 3.0.0
+info:
+  title: OpenAPI specification
+  description: Survey Software Specification
+  version: 0.0.1
+  contact:
+    name: Oleg
+    url: https://github.com/a-oleg
+servers:
+  - url: http://localhost:8080/api/v1/
+    description: Dev server
+
+paths:
+  /surveys:
+    get:
+      summary: Method of geting surveys
+      description: Method of getting surveys from the database
+      operationId: getSurveys
+      tags:
+        - Survey
+      responses:
+        '200':
+          "description": Successful return of the survey list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Surveys"
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Method of adding a survey
+      description: Method for saving the survey in the database
+      operationId: createSurvey
+      tags:
+        - Survey
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/SurveyDto"
+      responses:
+        '200':
+          "description": Successful saving of the survey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SurveyDto"
+        '400':
+          "description": Bad request - incorrect data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /surveys/{id}:
+    get:
+      summary: Method of getting survey by ID
+      operationId: getSurveyById
+      tags:
+        - Survey
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Survey ID
+          schema:
+            type: string
+      responses:
+        '200':
+          "description": Successful return of the survey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SurveyDto"
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Method of updating the survey by ID
+      description: The method of updating the survey in the database
+      operationId: updateSurveyById
+      tags:
+        - Survey
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Survey ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/SurveyDto"
+      responses:
+        '200':
+          "description": Successful update of survey data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SurveyDto"
+        '400':
+          "description": Bad request - incorrect data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Method for deleting a survey by ID
+      description: The method of deleting the survey in the database
+      operationId: deleteSurveyById
+      tags:
+        - Survey
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Survey ID
+          schema:
+            type: string
+      responses:
+        '200':
+          "description": Successful deletion of the survey
+          content:
+            'application/json': {}
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /questions:
+    get:
+      summary: Method of geting question
+      description: Method of getting question from the database
+      operationId: getQuestion
+      tags:
+        - Question
+      responses:
+        '200':
+          "description": Successful return of the question list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbstractQuestion"
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Method of adding a question
+      description: Method for saving the question in the database
+      operationId: createQuestion
+      tags:
+        - Question
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/AbstractQuestion"
+      responses:
+        '200':
+          "description": Successful saving of the question
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbstractQuestion"
+        '400':
+          "description": Bad request - incorrect data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /questions/{id}:
+    get:
+      summary: Method of getting question by ID
+      operationId: getQuestionById
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question ID
+          schema:
+            type: string
+      responses:
+        '200':
+          "description": Successful return of the question
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbstractQuestion"
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Method of question the survey by ID
+      description: The method of updating the question in the database
+      operationId: updateQuestionById
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/AbstractQuestion"
+      responses:
+        '200':
+          "description": Successful update of question data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AbstractQuestion"
+        '400':
+          "description": Bad request - incorrect data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Method for deleting a question by ID
+      description: The method of deleting the question in the database
+      operationId: deleteQuestionById
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question ID
+          schema:
+            type: string
+      responses:
+        '200':
+          "description": Successful deletion of the question
+          content:
+            'application/json': {}
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  
+  /questions/NPS:
+    post:
+      summary: Method of adding a question
+      description: Method for saving the question in the database
+      operationId: createQuestionNPS
+      tags:
+        - Question
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/QuestionNPSDto"
+      responses:
+        '200':
+          "description": Successful saving of the question
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionNPSDto"
+        '400':
+          "description": Bad request - incorrect data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  
+  /questions/NPS/{id}:
+    get:
+      summary: Method of getting question by ID
+      operationId: getQuestionNPSById
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question ID
+          schema:
+            type: string
+      responses:
+        '200':
+          "description": Successful return of the question NPS
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionNPSDto"
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Method of question the survey by ID
+      description: The method of updating the question in the database
+      operationId: updateQuestionNPSById
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/QuestionNPSDto"
+      responses:
+        '200':
+          "description": Successful update of question data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionNPSDto"
+        '400':
+          "description": Bad request - incorrect data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Method for deleting a question by ID
+      description: The method of deleting the question in the database
+      operationId: deleteQuestionNPSById
+      tags:
+        - Question
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Question ID
+          schema:
+            type: string
+      responses:
+        '200':
+          "description": Successful deletion of the question
+          content:
+            'application/json': {}
+        default:
+          description: Any mistake
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    SurveyDto:
+      type: object
+      description: A survey object consisting of questions
+      required:
+        - creatorId
+        - surveyName
+        - folderId
+        - activityStatus
+      properties:
+        surveyId:
+          type: integer
+          example: 987654321
+          description: Survey ID
+        creatorId:
+          type: integer
+          example: 987654321
+          description: ID of the user who created the survey
+        surveyName:
+          type: string
+          example: firstSurvey
+          description: The name of the survey specified by the user
+        createdAt:
+          type: string
+          format: 2000-01-01T15:00:00+01
+          example: 2000-01-01T15:00:00+01
+          description: Survey creation date
+        folderId:
+          type: integer
+          example: 987654321
+          description: Folder ID
+        activityStatus:
+          type: boolean
+          example: true
+          description: Current or archived version of the survey
+    Surveys:
+      type: array
+      items:
+        $ref: "#/components/schemas/SurveyDto"
+
+    AbstractQuestion:
+      type: object
+      description: Parent object for all questions. Used as part of the Survey object
+      required:
+        - archivedId
+        - activityStatus
+        - surveyId
+        - questionNumber
+        - questionType
+        - textQuestion
+        - descriptionText
+        - buttonText
+        - createdAt
+      properties:
+        questionId:
+          type: integer
+          example: 987654321
+          description: Question ID
+        archivedId:
+          type: integer
+          example: 987654321
+          description: The previous version of the question that was edited
+        activityStatus:
+          type: boolean
+          example: true
+          description: Current or archived version of the question
+        surveyId:
+          type: integer
+          example: 987654321
+          description: ID of the survey that contains the question
+        questionNumber:
+          type: integer
+          example: 1
+          description: Question number in the survey
+        questionType:
+          type: string
+          example: CSI
+          description: The name of the survey specified by the user
+        textQuestion:
+          type: string
+          example: Rate our service from one to ten
+          description: The text of the question that is shown to the user
+        descriptionText:
+          type: string
+          example: Select a rating on the scale
+          description: The text of the description that is shown to the user
+        buttonText:
+          type: string
+          example: Next
+          description: The text of the button that is shown to the user
+        createdAt:
+          type: string
+          format: 2000-01-01T15:00:00+01
+          example: 2000-01-01T15:00:00+01
+          description: Question creation date
+    
+    QuestionNPSDto:
+      allOf:
+        - $ref: "#/components/schemas/AbstractQuestion"
+      type: object
+      description: Question-an NPC who is the heir of AbstractQuestion
+      required:
+        - haveIFindItDifficultToAnswer
+        - textInCommentField
+        - figureType
+        - gradientType
+      properties:
+        haveIFindItDifficultToAnswer:
+          type: boolean
+          example: true
+          description: A sign of the presence of the - I find it difficult to answer button
+        textInCommentField:
+          type: string
+          example: The default text in the comments field that is displayed to the user
+        figureType:
+          allOf:
+            - $ref: "#/components/schemas/FigureTypeEnumDto"
+          type: string
+        gradientType:
+          allOf:
+            - $ref: "#/components/schemas/GradientTypeEnumDto"
+          type: string
+
+    QuestionWithTextAnswerDto:
+      allOf:
+          - $ref: "#/components/schemas/AbstractQuestion"
+      type: object
+      description: A question with a text answer that is the heir of AbstractQuestion
+      required:
+        - haveIFindItDifficultToAnswer
+      properties:
+        haveIFindItDifficultToAnswer:
+          type: boolean
+          example: true
+          description: A sign of the presence of the - I find it difficult to answer button
+
+    FigureTypeEnumDto:
+      type: string
+      description: The figures that make up the scale, the assessment on which the user chooses
+      enum:
+        - STAR
+        - SMILE
+        - HEART
+        - CIRCLE
+        - SQUARE
+    
+    GradientTypeEnumDto:
+      type: string
+      description: The gradient of the shape that is shown to the user
+      enum:
+        - NO
+        - BLACKWHITE
+        - BLUEWHITE
+        - GRAYWHITE
+        - GREENWHITE
+        - ORANGEWHITE
+        - YELLOWWHITE
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
